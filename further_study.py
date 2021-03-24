@@ -46,11 +46,7 @@ def custom_append(input_list, value):
 
     """
 
-    counter = 0
-    for i in range(len(input_list)):
-        counter += 1
-
-    input_list.insert(counter,value)
+    input_list[:] = input_list + [value]
 
     pass
 
@@ -71,10 +67,8 @@ def custom_extend(input_list, second_list):
 
     """
 
-    for i in range(len(second_list)):
-        input_list.append(second_list[i])
+    input_list[:] = input_list + second_list
        
-    
     pass
 
 
@@ -95,9 +89,7 @@ def custom_insert(input_list, index, value):
 
     first_half = input_list[:index]
     second_half = input_list[index:]
-    first_half.append(value)
-    first_half.extend(second_half)
-    #combined_list = first_half + second_half
+    input_list[:] = first_half + [value] + second_half
 
     pass
 
@@ -117,6 +109,8 @@ def custom_remove(input_list, value):
         True
 
     """
+    first_item_removed = input_list[1:]
+    input_list[:] = first_item_removed
 
     pass
 
@@ -137,8 +131,9 @@ def custom_pop(input_list):
 
     """
 
-    return None
-
+    last_item_removed = input_list[-1]
+    input_list[:] = input_list[:-1]
+    return last_item_removed 
 
 def custom_index(input_list, value):
     """Return the index of the first item of value found in input_list.
@@ -152,9 +147,11 @@ def custom_index(input_list, value):
         1
 
     """
-
-    return 0
-
+    index_selector = 0
+    for i in range(len(input_list)):
+        if input_list[i] == value:
+            index_selector = i
+    return index_selector 
 
 def custom_count(input_list, value):
     """Return the number of times value appears in the list.
@@ -168,8 +165,11 @@ def custom_count(input_list, value):
         2
 
     """
-
-    return 0
+    counter = 0
+    for item in input_list:
+        if item == value:
+            counter += 1
+    return counter 
 
 
 def custom_reverse(input_list):
@@ -187,6 +187,7 @@ def custom_reverse(input_list):
         True
 
     """
+    input_list[:] = input_list[::-1]
 
     pass
 
@@ -207,8 +208,11 @@ def custom_contains(input_list, value):
         True
 
     """
-
-    return None
+ 
+    for i in range(len(input_list)):
+        if input_list[i] == value:
+            return True
+    return False
 
 
 def custom_equality(some_list, another_list):
@@ -226,9 +230,14 @@ def custom_equality(some_list, another_list):
         False
 
     """
-
-    return None
-
+    true_check = 0
+    for i in range(len(some_list)):
+        if some_list[i] == another_list[i]:
+            true_check += 1
+    
+    if true_check == len(some_list):
+        return True
+    return False
 
 # This is the part were we actually run the doctests.
 
